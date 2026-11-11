@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Profil{% endblock %}
+
+{% block content %}
+<section class="card">
+  <div class="profile-head">
+    <div>
+      <h1>{{ user.get_full_name|default:user.username }}</h1>
+      <p class="muted">@{{ user.username }}</p>
+    </div>
+
+    {# Davomat hozircha ishlamaydi — faqat tugma #}
+    <div class="attendance">
+      {% if user.image and user.image_status == 'approved' %}
+        <button type="button" class="btn">Davomatdan o'tish</button>
+      {% else %}
+        <button type="button" class="btn" disabled>Davomatdan o'tish</button>
+        <p class="hint">Rasmingiz tasdiqlangandan keyin faollashadi.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <h2>Rasm</h2>
+
+  {% if user.image %}
+    <div class="photo-row">
+      <a class="photo-link" href="{{ user.image.url }}" target="_blank" rel="noopener" title="Asl o'lchamda ochish">
+        <img class="photo" src="{{ user.image.url }}" alt="{{ user.username }} rasmi">
+      </a>
+
+      <div class="photo-status">
+        <span class="badge badge-{{ user.image_status }}">{{ user.get_image_status_display }}</span>
+
+        {% if user.image_status == 'pending' %}
+          <p>Rasmingiz admin tomonidan ko'rib chiqilmoqda. Natija shu yerda ko'rinadi.</p>
+        {% elif user.image_status == 'approved' %}
+          <p>Rasmingiz tasdiqlangan.</p>
+        {% elif user.image_status == 'rejected' %}
+          <div class="reason">
+            <strong>Bekor qilish sababi:</strong>
+            <p>{{ user.rejection_reason|linebreaksbr }}</p>
+          </div>
+          <p>Quyida yangi rasm yuklashingiz mumkin.</p>
+        {% endif %}
+      </div>
+    </div>
+  {% else %}
+    <p class="muted">Siz hali rasm yuklamagansiz.</p>
+  {% endif %}
+
+  {% if user.can_upload_image %}
+    <form method="post" enctype="multipart/form-data" class="upload">
+      {% csrf_token %}
+      {{ form.as_div }}
+      <button type="submit" class="btn">Rasmni yuklash</button>
+    </form>
+  {% endif %}
+</section>
+{% endblock %}

@@ -105,24 +105,23 @@ AUTH_USER_MODEL = 'accounts.User'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # Django validatorlari, faqat xabarlari o'zbekchada (accounts/password_validation.py)
+    {'NAME': 'accounts.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'accounts.password_validation.MinimumLengthValidator'},
+    {'NAME': 'accounts.password_validation.CommonPasswordValidator'},
+    {'NAME': 'accounts.password_validation.NumericPasswordValidator'},
 ]
+
+# Login / logout yo'naltirishlari
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = 'accounts:profile'
+LOGOUT_REDIRECT_URL = 'accounts:login'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'uz'
 
 TIME_ZONE = 'UTC'
 

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Ro'yxatdan o'tish{% endblock %}
+
+{% block content %}
+<section class="card card-narrow">
+  <h1>Ro'yxatdan o'tish</h1>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_div }}
+    <button type="submit" class="btn btn-block">Ro'yxatdan o'tish</button>
+  </form>
+
+  <p class="muted center">
+    Akkauntingiz bormi? <a href="{% url 'accounts:login' %}">Kirish</a>
+  </p>
+</section>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Kirish{% endblock %}
+
+{% block content %}
+<section class="card card-narrow">
+  <h1>Kirish</h1>
+
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_div }}
+    {% if next %}<input type="hidden" name="next" value="{{ next }}">{% endif %}
+    <button type="submit" class="btn btn-block">Kirish</button>
+  </form>
+
+  <p class="muted center">
+    Akkauntingiz yo'qmi? <a href="{% url 'accounts:register' %}">Ro'yxatdan o'ting</a>
+  </p>
+</section>
+{% endblock %}
